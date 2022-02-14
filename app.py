@@ -110,10 +110,13 @@ def add_keys():
 def delete_key(keyid):
     try:
         if request.method == 'GET':
-            key = Keys.query.filter_by(KeyID=keyid).first()        
-            db.session.delete(key)
-            db.session.commit()        
-            return jsonify({'data': "success"})
+            key = Keys.query.filter_by(KeyID=keyid).first()   
+	    var result = confirm("Want to delete?");
+            if (result) {
+               db.session.delete(key)
+               db.session.commit()        
+               return jsonify({'data': "success"})
+	    }
         else:
             return jsonify({'data': 'fail'})
     except Exception as e:
